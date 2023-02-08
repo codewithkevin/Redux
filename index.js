@@ -37,6 +37,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         numOfCakes: state.numOfCakes + 1,
       };
+    case "MUL_CAKE":
+      return {
+        numOfCakes: state.numOfCakes * 2,
+      };
     default:
       return state;
   }
@@ -61,5 +65,10 @@ store.dispatch(buyCake());
 store.dispatch(addCake());
 store.dispatch(addCake());
 store.dispatch(addCake());
+
+store.dispatch({ type: "MUL_CAKE"});
+store.dispatch({ type: "MUL_CAKE"});
+store.dispatch({ type: "MUL_CAKE"});
+store.dispatch({ type: "MUL_CAKE"});
 
 unsubscribe;

@@ -1,8 +1,10 @@
 const redux = require("redux");
 const createStore = redux.createStore;
+const combineReducers = redux.combineReducers;
 
 const BUY_CAKE = "BUY_CAKE";
 const ADD_CAKE = "ADD_CAKE";
+const BUY_ICECREAM = "BUY_ICECREAM";
 
 // Action
 const buyCake = () => {
@@ -19,10 +21,45 @@ const addCake = () => {
   };
 };
 
+const byIceCream = () => {
+  return {
+    type: BUY_ICECREAM,
+    info: "Fourth redux action",
+  };
+};
+
 //Reducers
 // (previousState, action) => newState
-const initialState = {
+const initialCakeState = {
   numOfCakes: 10,
+};
+
+const initialIceCreamState = {
+  numOfIceCreams: 20,
+};
+
+const cakeReducer = (state = initialCakeState, action) => {
+  switch (action.type) {
+    case BUY_CAKE:
+      return {
+        ...state,
+        numOfCakes: state.numOfCakes - 1,
+      };
+    default:
+      return state;
+  }
+};
+
+const iceCreamReducer = (state = initialIceCreamState, action) => {
+  switch (action.type) {
+    case BUY_ICECREAM:
+      return {
+        ...state,
+        numOfIceCreams: state.numOfIceCreams - 1,
+      };
+    default:
+      return state;
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -32,22 +69,24 @@ const reducer = (state = initialState, action) => {
         ...state,
         numOfCakes: state.numOfCakes - 1,
       };
-    case ADD_CAKE:
+
+    case BUY_ICECREAM:
       return {
         ...state,
-        numOfCakes: state.numOfCakes + 1,
+        numOfIceCreams: state.numOfIceCreams - 1,
       };
-    case "MUL_CAKE":
-      return {
-        numOfCakes: state.numOfCakes * 2,
-      };
+
     default:
       return state;
   }
 };
 
 //Store the state
-const store = createStore(reducer);
+const rootReducer = combineReducers({
+  cake: cakeReducer,
+  iceCream: iceCreamReducer,
+});
+const store = createStore(rootReducer);
 console.log("Intial state: ", store.getState());
 
 //Register Listner
@@ -56,19 +95,29 @@ const unsubscribe = store.subscribe(() =>
 );
 
 //Dispatch
-store.dispatch(buyCake());
-store.dispatch(buyCake());
-store.dispatch(buyCake());
-store.dispatch(buyCake());
-store.dispatch(buyCake());
+const num = 10;
+for (let i = 0; i < num; i++) {
+  store.dispatch(buyCake());
+  store.dispatch(byIceCream());
+}
+// store.dispatch(buyCake());
+// store.dispatch(buyCake());
+// store.dispatch(buyCake());
+// store.dispatch(buyCake());
+// store.dispatch(buyCake());
 
-store.dispatch(addCake());
-store.dispatch(addCake());
-store.dispatch(addCake());
+// store.dispatch(byIceCream());
+// store.dispatch(byIceCream());
+// store.dispatch(byIceCream());
+// store.dispatch(byIceCream());
 
-store.dispatch({ type: "MUL_CAKE"});
-store.dispatch({ type: "MUL_CAKE"});
-store.dispatch({ type: "MUL_CAKE"});
-store.dispatch({ type: "MUL_CAKE"});
+// store.dispatch(addCake());
+// store.dispatch(addCake());
+// store.dispatch(addCake());
+
+// store.dispatch({ type: "MUL_CAKE"});
+// store.dispatch({ type: "MUL_CAKE"});
+// store.dispatch({ type: "MUL_CAKE"});
+// store.dispatch({ type: "MUL_CAKE"});
 
 unsubscribe;

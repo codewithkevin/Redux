@@ -118,6 +118,5 @@ for (let i = 0; i < num; i++) {
 // store.dispatch({ type: "MUL_CAKE"});
 // store.dispatch({ type: "MUL_CAKE"});
 // store.dispatch({ type: "MUL_CAKE"});
-// store.dispatch({ type: "MUL_CAKE"});
 
 unsubscribe;

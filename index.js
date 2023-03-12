@@ -1,6 +1,10 @@
 const redux = require("redux");
+const reduxLogger = require("redux-logger");
+
 const createStore = redux.createStore;
 const combineReducers = redux.combineReducers;
+
+const logger = reduxLogger.createLogger();
 
 const BUY_CAKE = "BUY_CAKE";
 const ADD_CAKE = "ADD_CAKE";
